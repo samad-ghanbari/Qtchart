@@ -29,25 +29,32 @@ int main(int argc, char *argv[])
 
     QChart *chart = new QChart();
     QBarSeries *series = new QBarSeries();
-    QBarSet *set1 = new QBarSet("Class Grades");
-    QBarSet *set2 = new QBarSet("Base Grades");
+    QBarSet *set1 = new QBarSet("کلاس");
+    QBarSet *set2 = new QBarSet("پایه");
+    QBarSet *set3 = new QBarSet("صمد قنبری");
 
     *set1 << 10 << 15 <<20;
     *set2 << 12 << 18 << 16;
+    *set3 << 18 << 17 << 19;
+
+    set1->setColor(QColor("gray"));
+    set2->setColor(QColor("silver"));
+    set3->setColor(QColor("darkgreen"));
 
     series->append(set1);
     series->append(set2);
+    series->append(set3);
 
     chart->addSeries(series);
 
 
 
-    QCategoryAxis *axisX = new QCategoryAxis();
-    axisX->append("مستمر", 0);
-    axisX->append("نهایی", 1);
-    axisX->append("نیمسال", 2);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    series->attachAxis(axisX);
+    // QCategoryAxis *axisX = new QCategoryAxis();
+    // axisX->append("مستمر", 0);
+    // axisX->append("نهایی", 1);
+    // axisX->append("نیمسال", 2);
+    // chart->addAxis(axisX, Qt::AlignBottom);
+    // series->attachAxis(axisX);
 
     QValueAxis *axisY = new QValueAxis();
     axisY->setRange(0, 20);
@@ -57,8 +64,10 @@ int main(int argc, char *argv[])
 
 
     QChartView *chartView = new QChartView(chart);
-    chartView->show();
-    chartView->render(&painter);
+    QPixmap bchart = chartView->grab();
+    //chartView->resize(100,100);
+
+    painter.drawPixmap(100, 100, 300, 300,bchart);
 
     painter.end();  // Finish painting
 
